@@ -2895,7 +2895,7 @@ runFunction(function()
 	end
 
 	Fly = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-		Name = "Fly",
+		Name = "Skill",
 		Function = function(callback)
 			if callback then
 				olddeflate = bedwars.BalloonController.deflateBalloon
@@ -3059,7 +3059,7 @@ runFunction(function()
 				olddeflate = nil
 			end
 		end,
-		HoverText = "Makes you go zoom (longer Fly discovered by exelys and Cqded)",
+		HoverText = "Let's you fly because your very skilled.",
 		ExtraText = function() 
 			return "Heatseeker"
 		end
@@ -3212,60 +3212,13 @@ runFunction(function()
 		end
 	end)
 
-	GrappleExploit = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-		Name = "GrappleExploit",
-		Function = function(callback)
-			if callback then
-				local grappleHooked = false
-				table.insert(GrappleExploit.Connections, bedwars.ClientHandler:Get("GrapplingHookFunctions"):Connect(function(p4)
-					if p4.hookFunction == "PLAYER_IN_TRANSIT" then
-						bedwarsStore.grapple = tick() + 1.8
-						grappleHooked = true
-						GrappleExploit.ToggleButton(false)
-					end
-				end))
-
-				local fireball = getItem("grappling_hook")
-				if fireball then 
-					task.spawn(function()
-						repeat task.wait() until bedwars.CooldownController:getRemainingCooldown("grappling_hook") == 0 or (not GrappleExploit.Enabled)
-						if (not GrappleExploit.Enabled) then return end
-						switchItem(fireball.tool)
-						local pos = entityLibrary.character.HumanoidRootPart.CFrame.p
-						local offsetshootpos = (CFrame.new(pos, pos + Vector3.new(0, -60, 0)) * CFrame.new(Vector3.new(-bedwars.BowConstantsTable.RelX, -bedwars.BowConstantsTable.RelY, -bedwars.BowConstantsTable.RelZ))).p
-						projectileRemote:CallServerAsync(fireball["tool"], nil, "grappling_hook_projectile", offsetshootpos, pos, Vector3.new(0, -60, 0), game:GetService("HttpService"):GenerateGUID(true), {drawDurationSeconds = 1}, workspace:GetServerTimeNow() - 0.045)
-					end)
-				else
-					warningNotification("GrappleExploit", "missing grapple hook", 3)
-					GrappleExploit.ToggleButton(false)
-					return
-				end
-
-				local startCFrame = entityLibrary.isAlive and entityLibrary.character.HumanoidRootPart.CFrame
-				RunLoops:BindToHeartbeat("GrappleExploit", function(delta) 
-					if GuiLibrary.ObjectsThatCanBeSaved["Lobby CheckToggle"].Api.Enabled then 
-						if bedwars.matchState == 0 then return end
-					end
-					if entityLibrary.isAlive then
-						entityLibrary.character.HumanoidRootPart.Velocity = Vector3.zero
-						entityLibrary.character.HumanoidRootPart.CFrame = startCFrame
-					end
-				end)
-			else
-				GrappleExploitUp = false
-				GrappleExploitDown = false
-				RunLoops:UnbindFromHeartbeat("GrappleExploit")
-			end
-		end,
+	
 		HoverText = "Makes you go zoom (longer GrappleExploit discovered by exelys and Cqded)",
 		ExtraText = function() 
 			if GuiLibrary.ObjectsThatCanBeSaved["Text GUIAlternate TextToggle"]["Api"].Enabled then 
 				return alternatelist[table.find(GrappleExploitMode["List"], GrappleExploitMode.Value)]
 			end
-			return GrappleExploitMode.Value 
-		end
-	})
-end)
+			return Grap
 
 runFunction(function()
 	local InfiniteFly = {Enabled = false}
@@ -3449,65 +3402,7 @@ runFunction(function()
 					bodyvelo.MaxForce = Vector3.new(0, 9e9, 0)
 					bodyvelo.Velocity = Vector3.new(0, -1, 0)
 					bodyvelo.Parent = oldcloneroot
-					oldcloneroot.Velocity = Vector3.new(clone.Velocity.X, -1, clone.Velocity.Z)
-					RunLoops:BindToHeartbeat("InfiniteFlyOff", function(dt)
-						if oldcloneroot then 
-							oldcloneroot.Velocity = Vector3.new(clone.Velocity.X, -1, clone.Velocity.Z)
-							local bruh = {clone.CFrame:GetComponents()}
-							bruh[2] = oldcloneroot.CFrame.Y
-							local newcf = CFrame.new(unpack(bruh))
-							FlyOverlap.FilterDescendantsInstances = {lplr.Character, gameCamera}
-							local allowed = true
-							for i,v in pairs(workspace:GetPartBoundsInRadius(newcf.p, 2, FlyOverlap)) do 
-								if (v.Position.Y + (v.Size.Y / 2)) > (newcf.p.Y + 0.5) then 
-									allowed = false
-									break
-								end
-							end
-							if allowed then
-								oldcloneroot.CFrame = newcf
-							end
-						end
-					end)
-					oldcloneroot.CFrame = CFrame.new(unpack(origcf))
-					entityLibrary.character.Humanoid:ChangeState(Enum.HumanoidStateType.Landed)
-					disabledproper = false
-					if isnetworkowner(oldcloneroot) then 
-						warningNotification("InfiniteFly", "Waiting 1.5s to not flag", 3)
-						task.delay(1.5, disablefunc)
-					else
-						disablefunc()
-					end
-				end
-				InfiniteFlyUp = false
-				InfiniteFlyDown = false
-			end
-		end,
-		HoverText = "Makes you go zoom",
-		ExtraText = function()
-			return "Heatseeker"
-		end
-	})
-	InfiniteFlySpeed = InfiniteFly.CreateSlider({
-		Name = "Speed",
-		Min = 1,
-		Max = 23,
-		Function = function(val) end, 
-		Default = 23
-	})
-	InfiniteFlyVerticalSpeed = InfiniteFly.CreateSlider({
-		Name = "Vertical Speed",
-		Min = 1,
-		Max = 100,
-		Function = function(val) end, 
-		Default = 44
-	})
-	InfiniteFlyVertical = InfiniteFly.CreateToggle({
-		Name = "Y Level",
-		Function = function() end, 
-		Default = true
-	})
-end)
+
 
 local killauraNearPlayer
 runFunction(function()
