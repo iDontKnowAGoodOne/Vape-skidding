@@ -1,4 +1,3 @@
---This watermark is used to delete the file if its cached, remove it to make the file persist after commits.
 local GuiLibrary = shared.GuiLibrary
 local playersService = game:GetService("Players")
 local textService = game:GetService("TextService")
@@ -1843,67 +1842,43 @@ runFunction(function()
 			end,
 			enable = function(args)
 				if #args >= 1 then
-					if args[1]:lower() == "all" then
-						for i,v in pairs(GuiLibrary.ObjectsThatCanBeSaved) do 
-							if v.Type == "OptionsButton" and i ~= "Panic" and not v.Api.Enabled then
-								v.Api.ToggleButton()
-							end
+					local module
+					for i,v in pairs(GuiLibrary.ObjectsThatCanBeSaved) do 
+						if v.Type == "OptionsButton" and i:lower() == args[1]:lower().."optionsbutton" then
+							module = v
+							break
 						end
-					else
-						local module
-						for i,v in pairs(GuiLibrary.ObjectsThatCanBeSaved) do 
-							if v.Type == "OptionsButton" and i:lower() == args[1]:lower().."optionsbutton" then
-								module = v
-								break
-							end
-						end
-						if module and not module.Api.Enabled then
-							module.Api.ToggleButton()
-						end
+					end
+					if module and not module.Api.Enabled then
+						module.Api.ToggleButton()
 					end
 				end
 			end,
 			disable = function(args)
 				if #args >= 1 then
-					if args[1]:lower() == "all" then
-						for i,v in pairs(GuiLibrary.ObjectsThatCanBeSaved) do 
-							if v.Type == "OptionsButton" and i ~= "Panic" and v.Api.Enabled then
-								v.Api.ToggleButton()
-							end
+					local module
+					for i,v in pairs(GuiLibrary.ObjectsThatCanBeSaved) do 
+						if v.Type == "OptionsButton" and i:lower() == args[1]:lower().."optionsbutton" then
+							module = v
+							break
 						end
-					else
-						local module
-						for i,v in pairs(GuiLibrary.ObjectsThatCanBeSaved) do 
-							if v.Type == "OptionsButton" and i:lower() == args[1]:lower().."optionsbutton" then
-								module = v
-								break
-							end
-						end
-						if module and module.Api.Enabled then
-							module.Api.ToggleButton()
-						end
+					end
+					if module and module.Api.Enabled then
+						module.Api.ToggleButton()
 					end
 				end
 			end,
 			toggle = function(args)
 				if #args >= 1 then
-					if args[1]:lower() == "all" then
-						for i,v in pairs(GuiLibrary.ObjectsThatCanBeSaved) do 
-							if v.Type == "OptionsButton" and i ~= "Panic" then
-								v.Api.ToggleButton()
-							end
+					local module
+					for i,v in pairs(GuiLibrary.ObjectsThatCanBeSaved) do 
+						if v.Type == "OptionsButton" and i:lower() == args[1]:lower().."optionsbutton" then
+							module = v
+							break
 						end
-					else
-						local module
-						for i,v in pairs(GuiLibrary.ObjectsThatCanBeSaved) do 
-							if v.Type == "OptionsButton" and i:lower() == args[1]:lower().."optionsbutton" then
-								module = v
-								break
-							end
-						end
-						if module then
-							module.Api.ToggleButton()
-						end
+					end
+					if module then
+						module.Api.ToggleButton()
 					end
 				end
 			end,
@@ -2251,32 +2226,38 @@ end
 runFunction(function()
 	local handsquare = Instance.new("ImageLabel")
 	handsquare.Size = UDim2.new(0, 26, 0, 27)
-	handsquare.BackgroundColor3 = Color3.fromRGB(26, 25, 26)
-	handsquare.Position = UDim2.new(0, 72, 0, 44)
+	handsquare.BackgroundColor3 = Color3.fromRGB(173,72,209)
+	handsquare.BackgroundTransparency = 0.4
+	handsquare.Position = UDim2.new(0, 85, 0, 47)
 	handsquare.Parent = vapeTargetInfo.Object.GetCustomChildren().Frame.MainInfo
 	local handround = Instance.new("UICorner")
-	handround.CornerRadius = UDim.new(0, 4)
+	handround.CornerRadius = UDim.new(0, 8)
 	handround.Parent = handsquare
 	local helmetsquare = handsquare:Clone()
-	helmetsquare.Position = UDim2.new(0, 100, 0, 44)
+	helmetsquare.Position = UDim2.new(0, 114, 0, 47)
 	helmetsquare.Parent = vapeTargetInfo.Object.GetCustomChildren().Frame.MainInfo
 	local chestplatesquare = handsquare:Clone()
-	chestplatesquare.Position = UDim2.new(0, 127, 0, 44)
+	chestplatesquare.Position = UDim2.new(0, 143, 0, 47)
 	chestplatesquare.Parent = vapeTargetInfo.Object.GetCustomChildren().Frame.MainInfo
 	local bootssquare = handsquare:Clone()
-	bootssquare.Position = UDim2.new(0, 155, 0, 44)
+	bootssquare.Position = UDim2.new(0, 172, 0, 47)
 	bootssquare.Parent = vapeTargetInfo.Object.GetCustomChildren().Frame.MainInfo
 	local uselesssquare = handsquare:Clone()
-	uselesssquare.Position = UDim2.new(0, 182, 0, 44)
+	uselesssquare.Position = UDim2.new(0, 201, 0, 47)
 	uselesssquare.Parent = vapeTargetInfo.Object.GetCustomChildren().Frame.MainInfo
 	local oldupdate = vapeTargetInfo.UpdateInfo
 	vapeTargetInfo.UpdateInfo = function(tab, targetsize)
 		local bkgcheck = vapeTargetInfo.Object.GetCustomChildren().Frame.MainInfo.BackgroundTransparency == 1
-		handsquare.BackgroundTransparency = bkgcheck and 1 or 0
-		helmetsquare.BackgroundTransparency = bkgcheck and 1 or 0
-		chestplatesquare.BackgroundTransparency = bkgcheck and 1 or 0
-		bootssquare.BackgroundTransparency = bkgcheck and 1 or 0
-		uselesssquare.BackgroundTransparency = bkgcheck and 1 or 0
+		handsquare.BackgroundTransparency = bkgcheck and 0.2 or 0.4
+		handsquare.BackgroundColor3 = bkgcheck and Color3.fromRGB(165,50,210) or Color3.fromRGB(178,60,201)
+		helmetsquare.BackgroundTransparency = bkgcheck and 0.2 or 0.4
+		helmetsquare.BackgroundColor3 = bkgcheck and Color3.fromRGB(165,50,210) or Color3.fromRGB(178,60,201)
+		chestplatesquare.BackgroundTransparency = bkgcheck and 0.2 or 0.4
+		chestplatesquare.BackgroundColor3 = bkgcheck and Color3.fromRGB(165,50,210) or Color3.fromRGB(178,60,201)
+		bootssquare.BackgroundTransparency = bkgcheck and 0.2 or 0.4
+		bootssquare.BackgroundColor3 = bkgcheck and Color3.fromRGB(165,50,210) or Color3.fromRGB(178,60,201)
+		uselesssquare.BackgroundTransparency = bkgcheck and 0.2 or 0.4
+		uselesssquare.BackgroundColor3 = bkgcheck and Color3.fromRGB(165,50,210) or Color3.fromRGB(178,60,201)
 		pcall(function()
 			for i,v in pairs(shared.VapeTargetInfo.Targets) do
 				local inventory = bedwarsStore.inventories[v.Player] or {}
@@ -2328,6 +2309,7 @@ GuiLibrary.RemoveObject("FOVChangerOptionsButton")
 GuiLibrary.RemoveObject("AntiVoidOptionsButton")
 GuiLibrary.RemoveObject("SongBeatsOptionsButton")
 GuiLibrary.RemoveObject("TargetStrafeOptionsButton")
+GuiLibrary.RemoveObject("GravityOptionsButton")
 
 runFunction(function()
 	local AimAssist = {Enabled = false}
@@ -2895,7 +2877,7 @@ runFunction(function()
 	end
 
 	Fly = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-		Name = "Skill",
+		Name = "Fly",
 		Function = function(callback)
 			if callback then
 				olddeflate = bedwars.BalloonController.deflateBalloon
@@ -3059,9 +3041,9 @@ runFunction(function()
 				olddeflate = nil
 			end
 		end,
-		HoverText = "Let's you fly because your very skilled.",
+		HoverText = "Makes you go zoom (longer Fly discovered by exelys and Cqded)",
 		ExtraText = function() 
-			return "Heatseeker"
+			return "CFrame"
 		end
 	})
 	FlySpeed = Fly.CreateSlider({
@@ -3212,13 +3194,60 @@ runFunction(function()
 		end
 	end)
 
-	
+	GrappleExploit = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
+		Name = "GrappleExploit",
+		Function = function(callback)
+			if callback then
+				local grappleHooked = false
+				table.insert(GrappleExploit.Connections, bedwars.ClientHandler:Get("GrapplingHookFunctions"):Connect(function(p4)
+					if p4.hookFunction == "PLAYER_IN_TRANSIT" then
+						bedwarsStore.grapple = tick() + 1.8
+						grappleHooked = true
+						GrappleExploit.ToggleButton(false)
+					end
+				end))
+
+				local fireball = getItem("grappling_hook")
+				if fireball then 
+					task.spawn(function()
+						repeat task.wait() until bedwars.CooldownController:getRemainingCooldown("grappling_hook") == 0 or (not GrappleExploit.Enabled)
+						if (not GrappleExploit.Enabled) then return end
+						switchItem(fireball.tool)
+						local pos = entityLibrary.character.HumanoidRootPart.CFrame.p
+						local offsetshootpos = (CFrame.new(pos, pos + Vector3.new(0, -60, 0)) * CFrame.new(Vector3.new(-bedwars.BowConstantsTable.RelX, -bedwars.BowConstantsTable.RelY, -bedwars.BowConstantsTable.RelZ))).p
+						projectileRemote:CallServerAsync(fireball["tool"], nil, "grappling_hook_projectile", offsetshootpos, pos, Vector3.new(0, -60, 0), game:GetService("HttpService"):GenerateGUID(true), {drawDurationSeconds = 1}, workspace:GetServerTimeNow() - 0.045)
+					end)
+				else
+					warningNotification("GrappleExploit", "missing grapple hook", 3)
+					GrappleExploit.ToggleButton(false)
+					return
+				end
+
+				local startCFrame = entityLibrary.isAlive and entityLibrary.character.HumanoidRootPart.CFrame
+				RunLoops:BindToHeartbeat("GrappleExploit", function(delta) 
+					if GuiLibrary.ObjectsThatCanBeSaved["Lobby CheckToggle"].Api.Enabled then 
+						if bedwars.matchState == 0 then return end
+					end
+					if entityLibrary.isAlive then
+						entityLibrary.character.HumanoidRootPart.Velocity = Vector3.zero
+						entityLibrary.character.HumanoidRootPart.CFrame = startCFrame
+					end
+				end)
+			else
+				GrappleExploitUp = false
+				GrappleExploitDown = false
+				RunLoops:UnbindFromHeartbeat("GrappleExploit")
+			end
+		end,
 		HoverText = "Makes you go zoom (longer GrappleExploit discovered by exelys and Cqded)",
 		ExtraText = function() 
 			if GuiLibrary.ObjectsThatCanBeSaved["Text GUIAlternate TextToggle"]["Api"].Enabled then 
 				return alternatelist[table.find(GrappleExploitMode["List"], GrappleExploitMode.Value)]
 			end
-			return Grap
+			return GrappleExploitMode.Value 
+		end
+	})
+end)
 
 runFunction(function()
 	local InfiniteFly = {Enabled = false}
@@ -3402,7 +3431,65 @@ runFunction(function()
 					bodyvelo.MaxForce = Vector3.new(0, 9e9, 0)
 					bodyvelo.Velocity = Vector3.new(0, -1, 0)
 					bodyvelo.Parent = oldcloneroot
-
+					oldcloneroot.Velocity = Vector3.new(clone.Velocity.X, -1, clone.Velocity.Z)
+					RunLoops:BindToHeartbeat("InfiniteFlyOff", function(dt)
+						if oldcloneroot then 
+							oldcloneroot.Velocity = Vector3.new(clone.Velocity.X, -1, clone.Velocity.Z)
+							local bruh = {clone.CFrame:GetComponents()}
+							bruh[2] = oldcloneroot.CFrame.Y
+							local newcf = CFrame.new(unpack(bruh))
+							FlyOverlap.FilterDescendantsInstances = {lplr.Character, gameCamera}
+							local allowed = true
+							for i,v in pairs(workspace:GetPartBoundsInRadius(newcf.p, 2, FlyOverlap)) do 
+								if (v.Position.Y + (v.Size.Y / 2)) > (newcf.p.Y + 0.5) then 
+									allowed = false
+									break
+								end
+							end
+							if allowed then
+								oldcloneroot.CFrame = newcf
+							end
+						end
+					end)
+					oldcloneroot.CFrame = CFrame.new(unpack(origcf))
+					entityLibrary.character.Humanoid:ChangeState(Enum.HumanoidStateType.Landed)
+					disabledproper = false
+					if isnetworkowner(oldcloneroot) then 
+						warningNotification("InfiniteFly", "Waiting 1.5s to not flag", 3)
+						task.delay(1.5, disablefunc)
+					else
+						disablefunc()
+					end
+				end
+				InfiniteFlyUp = false
+				InfiniteFlyDown = false
+			end
+		end,
+		HoverText = "Makes you go zoom",
+		ExtraText = function()
+			return "CFrame"
+		end
+	})
+	InfiniteFlySpeed = InfiniteFly.CreateSlider({
+		Name = "Speed",
+		Min = 1,
+		Max = 23,
+		Function = function(val) end, 
+		Default = 23
+	})
+	InfiniteFlyVerticalSpeed = InfiniteFly.CreateSlider({
+		Name = "Vertical Speed",
+		Min = 1,
+		Max = 100,
+		Function = function(val) end, 
+		Default = 44
+	})
+	InfiniteFlyVertical = InfiniteFly.CreateToggle({
+		Name = "Y Level",
+		Function = function() end, 
+		Default = true
+	})
+end)
 
 local killauraNearPlayer
 runFunction(function()
@@ -3516,15 +3603,15 @@ runFunction(function()
 			{CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(0), math.rad(-0), math.rad(-0)), Time = 0.1}
 		},
 		Exhibition = {
-			{CFrame = CFrame.new(0.69, -0.7, 0.6) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.1},
-			{CFrame = CFrame.new(0.7, -0.71, 0.59) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.2}
+			{CFrame = CFrame.new(0.69, -0.1, -0.5) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.12},
+			{CFrame = CFrame.new(0.7, -0.11, -0.51) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.18}
 		},
 		["Exhibition Old"] = {
-			{CFrame = CFrame.new(0.69, -0.7, 0.6) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.15},
-			{CFrame = CFrame.new(0.69, -0.7, 0.6) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.05},
-			{CFrame = CFrame.new(0.7, -0.71, 0.59) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.1},
-			{CFrame = CFrame.new(0.7, -0.71, 0.59) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.05},
-			{CFrame = CFrame.new(0.63, -0.1, 1.37) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.15}
+			{CFrame = CFrame.new(0.69, -0.2, -1) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.12},
+			{CFrame = CFrame.new(0.69, -0.2, -1) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.04},
+			{CFrame = CFrame.new(0.7, -0.21, -1.01) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.1},
+			{CFrame = CFrame.new(0.7, -0.21, -1.01) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.04},
+			{CFrame = CFrame.new(0.63, 0.3, -0.27) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.12}
 		}
 	}
 
@@ -4878,7 +4965,7 @@ runFunction(function()
 		end, 
 		HoverText = "Increases your movement.",
 		ExtraText = function() 
-			return "Heatseeker"
+			return "CFrame"
 		end
 	})
 	SpeedValue = Speed.CreateSlider({
@@ -9880,26 +9967,460 @@ runFunction(function()
 	})
 end)
 
+-- custom modules here
+
 runFunction(function()
-    local Disabler = {Enabled = false}
-    Disabler = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
-        Name = "FirewallBypass",
-        Function = function(callback)
-            if callback then 
-				task.spawn(function()
-					repeat
-						task.wait(0.03)
-						local item = getItemNear("scythe")
-						if item and lplr.Character.HandInvItem.Value == item.tool then 
-							bedwars.ClientHandler:Get("ScytheDash"):SendToServer({direction = Vector3.new(9e9, 9e9, 9e9)})
+	local original = game:GetObjects("rbxassetid://14027120450")
+	local folder = original[1]
+    folder.Parent = game.ReplicatedStorage
+    local offset = CFrame.new(0,0,0)
+    local angleoffset = CFrame.Angles(math.rad(90),math.rad(-130),math.rad(0))
+    local connection
+    local texturepack = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
+        Name = "TexturePack",
+        HoverText = "mastadawn inspired txtpack, made by @iraqicat",
+        Function = function(gay)
+            if gay then
+                connection = workspace:WaitForChild("Camera").Viewmodel.ChildAdded:Connect(function(item)
+	                for i,v in pairs(folder:GetChildren()) do
+		                if item.Name == v.Name then
+			                for i,v in pairs(item:GetChildren()) do
+				                if v:IsA("Part") or v:IsA("MeshPart") or v:IsA("UnionOperation") then
+					                v.Transparency = 1
+									--check for diamond and emerald sword and rageblade neons
+									if v:FindFirstChild("Neon") then v:FindFirstChild("Neon").Transparency = 1 end
+									if v:FindFirstChild("Gem") then v:FindFirstChild("Gem").Transparency = 1 end
+									if v:FindFirstChild("gem") then v:FindFirstChild("gem").Transparency = 1 end
+				                end
+    		                end	
+                        end
+						if item.Name == v.Name then
+			            	local swordmodel = folder[item.Name]:Clone()
+			            	swordmodel.CFrame = item:WaitForChild("Handle").CFrame * offset
+                        	swordmodel.CFrame = item:WaitForChild("Handle").CFrame * angleoffset
+							if item.name == "rageblade" then swordmodel.CFrame = item:WaitForChild("Handle").CFrame * CFrame.Angles(math.rad(-80),math.rad(230),math.rad(10)) end
+			            	swordmodel.Parent = item
+
+		    	        	local weld = Instance.new("WeldConstraint",swordmodel)
+		    	        	weld.Part0 = swordmodel
+		    	        	weld.Part1 = item:WaitForChild("Handle")
 						end
-					until (not Disabler.Enabled)
-				end)
+	                end
+                end)
+            else
+                if connection then
+                    connection:Disconnect()
+                end
             end
-        end,
-		HoverText = "Float disabler with scythe"
+        end
     })
 end)
+
+runFunction(function()
+	local HotbarMod = {Enabled = false}
+	local HealthbarGUIColor = {Enabled = false}
+	local HealthbarColor = {}
+	local LVLBarGUIColor = {Enabled = false}
+	local LVLBarColor = {}
+	local LVLBarColorCheck = {Enabled = false}
+	HotbarMod = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
+		Name = "HotbarMod",
+		HoverText = "Changes Healthbar Color.",
+		Function = function(callback)
+			if callback then
+				if HealthbarGUIColor.Enabled then
+					game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("hotbar")["1"]:WaitForChild("HotbarHealthbarContainer").HealthbarProgressWrapper["1"].BackgroundColor3 = Color3.fromHSV(GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Hue, GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Sat, GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Value)
+				else
+					game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("hotbar")["1"]:WaitForChild("HotbarHealthbarContainer").HealthbarProgressWrapper["1"].BackgroundColor3 = Color3.fromHSV(HealthbarColor.hue, HealthbarColor.sat, HealthbarColor.val)
+				end
+				if LVLBarGUIColor.Enabled then
+					game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("hotbar")["1"]:WaitForChild("ProgressBarContainer").ProgressBar.BackgroundColor3 = Color3.fromHSV(GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Hue, GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Sat, GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Value)
+				else
+					if LVLBarColor.RainbowValue then
+						game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("hotbar")["1"]:WaitForChild("ProgressBarContainer").ProgressBar.BackgroundColor3 = Color3.fromHSV((not LVLBarColorCheck.Enabled) and ((LVLBarColor.hue > 0.125 and LVLBarColor.hue - 0.125) or (LVLBarColor.hue < 0.125 and LVLBarColor.hue + 0.875)) or LVLBarColor.hue, LVLBarColor.sat, LVLBarColorCheck.Enabled and (LVLBarColor.val - 0.4) or LVLBarColor.val)
+					else
+						game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("hotbar")["1"]:WaitForChild("ProgressBarContainer").ProgressBar.BackgroundColor3 = Color3.fromHSV(LVLBarColor.hue, LVLBarColor.sat, LVLBarColor.val)
+					end
+				end
+			else
+				game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("hotbar")["1"]:WaitForChild("HotbarHealthbarContainer").HealthbarProgressWrapper["1"].BackgroundColor3 = Color3.fromRGB(203,54,36)
+				game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("hotbar")["1"]:WaitForChild("ProgressBarContainer").ProgressBar.BackgroundColor3 = Color3.fromRGB(255,230,79)
+			end
+		end
+	})
+	HealthbarGUIColor = HotbarMod.CreateToggle({
+		Name = "Use GUI Color for Healthbar",
+		Function = function(callback)
+			if callback then	
+				if HotbarMod.Enabled then
+					game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("hotbar")["1"]:WaitForChild("HotbarHealthbarContainer").HealthbarProgressWrapper["1"].BackgroundColor3 = Color3.fromHSV(GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Hue, GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Sat, GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Value)
+				end
+			else
+				if HotbarMod.Enabled then
+					game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("hotbar")["1"]:WaitForChild("HotbarHealthbarContainer").HealthbarProgressWrapper["1"].BackgroundColor3 = Color3.fromHSV(HealthbarColor.hue, HealthbarColor.sat, HealthbarColor.val)
+				end
+			end
+		end
+	})
+	HealthbarColor = HotbarMod.CreateColorSlider({
+		Name = "Healthbar Color   ",
+		Function = function(hue, sat, val)
+			HealthbarColor = {
+				hue = hue,
+				sat = sat,
+				val = val
+			}
+			if HotbarMod.Enabled and (not HealthbarGUIColor.Enabled) then
+				game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("hotbar")["1"]:WaitForChild("HotbarHealthbarContainer").HealthbarProgressWrapper["1"].BackgroundColor3 = Color3.fromHSV(hue, sat, val)
+			end
+		end
+	})
+	LVLBarGUIColor = HotbarMod.CreateToggle({
+		Name = "Use GUI color for LVL bar",
+		Function = function(callback)
+			if callback then	
+				if HotbarMod.Enabled then
+					game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("hotbar")["1"]:WaitForChild("ProgressBarContainer").ProgressBar.BackgroundColor3 = Color3.fromHSV(GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Hue, GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Sat, GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Value)
+				end
+			else
+				if HotbarMod.Enabled then
+					game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("hotbar")["1"]:WaitForChild("ProgressBarContainer").ProgressBar.BackgroundColor3 = Color3.fromHSV(LVLBarColor.hue, LVLBarColor.sat, LVLBarColor.val)
+				end
+			end
+		end
+	})
+	LVLBarColor = HotbarMod.CreateColorSlider({
+		Name = "LVL bar Color   ",
+		Function = function(hue, sat, val)
+			LVLBarColor = {
+				hue = hue,
+				sat = sat,
+				val = val
+			}
+			if HotbarMod.Enabled and (not LVLBarGUIColor.Enabled) then
+				game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("hotbar")["1"]:WaitForChild("ProgressBarContainer").ProgressBar.BackgroundColor3 =  Color3.fromHSV((not LVLBarColorCheck.Enabled) and ((LVLBarColor.hue > 0.125 and LVLBarColor.hue - 0.125) or (LVLBarColor.hue < 0.125 and LVLBarColor.hue + 0.875)) or LVLBarColor.hue, LVLBarColor.sat, LVLBarColorCheck.Enabled and (LVLBarColor.val - 0.4) or LVLBarColor.val)
+			end
+		end
+	})
+	LVLBarColorCheck = HotbarMod.CreateToggle({
+		Name = "Darken LVL bar (Rainbow)",
+		HoverText = "Darkens LVL bar instead of delaying RGB change in rainbow mode",
+		Function = function() end
+	})
+end)
+
+runFunction(function()
+	local flyModuleCheck = function()
+		if GuiLibrary.ObjectsThatCanBeSaved.InfiniteFlyOptionsButton.Api.Enabled or GuiLibrary.ObjectsThatCanBeSaved.FlyOptionsButton.Api.Enabled then
+			return true
+		else
+			return false
+		end
+	end
+
+	local targetIsAlive = function()
+		for i,v in pairs(shared.VapeTargetInfo.Targets) do
+			return true
+		end
+	end
+
+	local dashDisabler = {Enabled = false}
+	dashDisabler = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = "AnticheatBypass",
+		HoverText = "(re-enable with scythe to bypass) 30cframe 30ws floatdisabler scythe dash bypass",
+		Function = function(callback)
+			if callback then
+				task.spawn(function()
+					repeat
+						local item = getItemNear("scythe")
+						local scytheDashArgs = {
+							[1] = {
+								["direction"] = Vector3.new(9e9, 9e9, 9e9)
+							}
+						}
+						task.wait()
+						if item and playersService.LocalPlayer.Character.HandInvItem.Value == item.tool then
+							game:GetService("ReplicatedStorage").rbxts_include.node_modules:FindFirstChild("@rbxts").net.out._NetManaged.ScytheDash:FireServer(unpack(scytheDashArgs))
+
+							FlySpeed.Value = 30
+							lplr.Character.Humanoid.WalkSpeed = flyModuleCheck() and 20 or 30
+
+							if targetIsAlive() then
+								repeat
+									task.wait()
+									FlySpeed.Value = 23.33
+									lplr.Character.Humanoid.WalkSpeed = 20
+									game:GetService("ReplicatedStorage").rbxts_include.node_modules:FindFirstChild("@rbxts").net.out._NetManaged.ScytheDash:FireServer(unpack(scytheDashArgs))
+								until not targetIsAlive()
+								task.wait(1.8)
+							end
+						else
+							FlySpeed.Value = 23.33
+							lplr.Character.Humanoid.WalkSpeed = 20
+						end
+						task.wait()
+					until not dashDisabler.Enabled
+				end)
+			else
+				task.wait(0.05)
+				FlySpeed.Value = 23.33
+				lplr.Character.Humanoid.WalkSpeed = 20
+			end
+		end
+	})
+end)
+
+
+runFunction(function()
+
+	local flyModuleCheck = function()
+		-- xylex why xylex
+		if GuiLibrary.ObjectsThatCanBeSaved.InfiniteFlyOptionsButton.Api.Enabled or GuiLibrary.ObjectsThatCanBeSaved.FlyOptionsButton.Api.Enabled then
+			return true
+		else
+			return false
+		end
+	end
+
+	local GravityModule = {Enabled = false}
+	local GravityValue = {Value = 196}
+	GravityModule = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
+		Name = "Gravity",
+		HoverText = "inffly moment",
+		Function = function(callback)
+			if callback then
+				gravityConnection = runService.RenderStepped:Connect(function()
+					workspace.Gravity = flyModuleCheck() and 196.1999969482422 or GravityValue.Value
+				end)
+			else
+				if gravityConnection then gravityConnection:Disconnect() end
+				task.wait()
+				workspace.Gravity = 196.1999969482422
+			end
+		end
+	})
+	GravityValue = GravityModule.CreateSlider({
+		Name = "Gravity",
+		Min = 0,
+		Max = 196,
+		Default = 48,
+		Function = function(val) end
+	})
+end)
+
+--not the deathtps :sob:
+
+runFunction(function()
+	local tweenData = TweenInfo.new(0.663,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut,0,false,0.237)
+
+	-- Bed TP
+
+	local BedTP = {Enabled = false}
+	local bedRespawnConnection
+	local chosenBed
+
+	BedTP = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = "BedTP",
+		HoverText = "Resets then tweens to nearest bed.",
+		Function = function(callback)
+			if callback then
+				for i,v in pairs(workspace:GetChildren()) do
+					if v.Name == "bed" and v.Covers.BrickColor ~= lplr.TeamColor then
+						chosenBed = v
+					end
+				end	
+				if chosenBed then
+					lplr.Character.Humanoid.Health = 0
+					bedRespawnConnection = lplr.CharacterAdded:Connect(function()
+						repeat task.wait() until lplr.Character.PrimaryPart
+						local bedTween = tweenService:Create(lplr.Character.PrimaryPart, tweenData, {CFrame = chosenBed.CFrame * CFrame.new(0,3.5,0)})
+						bedTween:Play()
+						BedTP.ToggleButton(false)
+						chosenBed = nil
+						bedRespawnConnection:Disconnect()
+					end)
+				else 
+					warningNotification("Lunar Vape (BedTP)","No bed found.",3)
+					BedTP.ToggleButton(false)
+				end
+			else
+				if bedRespawnConnection then bedrespawnConnection:Disconnect() end
+			end
+		end
+	})
+
+	-- Player TP
+
+	local PlayerTP = {Enabled = false}
+	local playerRespawnConnection
+	local chosenPlayer
+
+	PlayerTP = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = "PlayerTP",
+		HoverText = "Resets then tweens to nearest player.",
+		Function = function(callback)
+			if callback then
+				for i,v in pairs(playersService:GetPlayers()) do
+					if v.Name ~= lplr.Name and v.TeamColor ~= lplr.TeamColor then
+						if v.Character.Humanoid then
+							chosenPlayer = v
+						end
+					end
+				end	
+				if chosenPlayer then
+					lplr.Character.Humanoid.Health = 0
+					playerRespawnConnection = lplr.CharacterAdded:Connect(function()
+						repeat task.wait() until lplr.Character.PrimaryPart
+						local toPlayerTween = tweenService:Create(lplr.Character.PrimaryPart, tweenData, {CFrame = chosenPlayer.Character.PrimaryPart.CFrame})
+						toPlayerTween:Play()
+						PlayerTP.ToggleButton(false)
+						playerRespawnConnection:Disconnect()
+					end)
+				else 
+					warningNotification("Lunar Vape (PlayerTP)","No player found.",3)
+					PlayerTP.ToggleButton(false)
+				end
+			else
+				if playerRespawnConnection then playerRespawnConnection:Disconnect() end
+			end
+		end
+	})
+
+	-- Mouse TP
+
+	local MouseTP = {Enabled = false}
+	-- credits to xylex for the clicktp in Universal.lua
+	-- also dont call me a skid its still xylex's script (Vape V4)
+	local mouseTPRaycastParams = RaycastParams.new()
+	mouseTPRaycastParams.RespectCanCollide = true
+	mouseTPRaycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+	local selectedPosition
+	local mouseTPRespawnConnection
+	
+	MouseTP = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = "MouseTP",
+		HoverText = "Resets then tweens to where-ever your mouse was pointing.",
+		Function = function(callback)
+			if callback then
+				mouseTPRaycastParams.FilterDescendantsInstances = {lplr.Character, gameCamera, workspace.Part}
+				local ray = workspace:Raycast(gameCamera.CFrame.p, lplr:GetMouse().UnitRay.Direction * 10000, ClickTPRaycast)
+				selectedPosition = ray and ray.Position
+				if selectedPosition then
+					lplr.Character.Humanoid.Health = 0
+					mouseTPRespawnConnection = lplr.CharacterAdded:Connect(function()
+						repeat task.wait() until lplr.Character.PrimaryPart
+						local mouseTPTween = tweenService:Create(lplr.Character.PrimaryPart, tweenData, {CFrame = CFrame.new(selectedPosition.X,selectedPosition.Y + 1.8,selectedPosition.Z)})
+						mouseTPTween:Play()
+						selectedPosition = nil
+						MouseTP.ToggleButton(false)
+						mouseTPRespawnConnection:Disconnect()
+					end)
+				else 
+					warningNotification("Lunar Vape (MouseTP)","Error saving position mouse was pointing at.",4)
+					MouseTP.ToggleButton(false)
+				end				
+			else
+				if mouseTPRespawnConnection then mouseTPRespawnConnection:Disconnect() end
+			end
+		end
+	})
+end)
+
+--[[runFunction(function()
+	local ClickTP = {Enabled = false}
+	local ClickTPMethod = {Value = "Normal"}
+	local ClickTPDelay = {Value = 1}
+	local ClickTPAmount = {Value = 1}
+	local ClickTPVertical = {Enabled = true}
+	local ClickTPVelocity = {Enabled = false}
+	local ClickTPRaycast = RaycastParams.new()
+	ClickTPRaycast.RespectCanCollide = true
+	ClickTPRaycast.FilterType = Enum.RaycastFilterType.Blacklist
+	ClickTP = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
+		Name = "MouseTP", 
+		Function = function(callback) 
+			if callback then
+				RunLoops:BindToHeartbeat("MouseTP", function()
+					if entityLibrary.isAlive and ClickTPVelocity.Enabled and ClickTPMethod.Value == "SlowTP" then 
+						entityLibrary.character.HumanoidRootPart.Velocity = Vector3.zero
+					end
+				end)
+				if entityLibrary.isAlive then 
+					ClickTPRaycast.FilterDescendantsInstances = {lplr.Character, gameCamera}
+					local ray = workspace:Raycast(gameCamera.CFrame.p, lplr:GetMouse().UnitRay.Direction * 10000, ClickTPRaycast)
+					local selectedPosition = ray and ray.Position + Vector3.new(0, entityLibrary.character.Humanoid.HipHeight + (entityLibrary.character.HumanoidRootPart.Size.Y / 2), 0)
+					if selectedPosition then 
+						if ClickTPMethod.Value == "Normal" then
+							entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(selectedPosition)
+							ClickTP.ToggleButton(false)
+						else
+							task.spawn(function()
+								repeat
+									if entityLibrary.isAlive then 
+										local newpos = (selectedPosition - entityLibrary.character.HumanoidRootPart.CFrame.p).Unit
+										newpos = newpos == newpos and newpos * math.min((selectedPosition - entityLibrary.character.HumanoidRootPart.CFrame.p).Magnitude, ClickTPAmount.Value) or Vector3.zero
+										entityLibrary.character.HumanoidRootPart.CFrame = entityLibrary.character.HumanoidRootPart.CFrame + Vector3.new(newpos.X, (ClickTPVertical.Enabled and newpos.Y or 0), newpos.Z)
+										if (selectedPosition - entityLibrary.character.HumanoidRootPart.CFrame.p).Magnitude <= 5 then 
+											break
+										end
+									end
+									task.wait(ClickTPDelay.Value / 100)
+								until entityLibrary.isAlive and (selectedPosition - entityLibrary.character.HumanoidRootPart.CFrame.p).Magnitude <= 5 or not ClickTP.Enabled
+								if ClickTP.Enabled then ClickTP.ToggleButton(false) end
+							end)
+						end
+					else
+						ClickTP.ToggleButton(false)
+						warningNotification("ClickTP", "No position found.", 1)
+					end
+				else
+					if ClickTP.Enabled then ClickTP.ToggleButton(false) end
+				end
+			else
+				RunLoops:UnbindFromHeartbeat("MouseTP")
+			end
+		end, 
+		HoverText = "Teleports to where your mouse is."
+	})
+	ClickTPMethod = ClickTP.CreateDropdown({
+		Name = "Method",
+		List = {"Normal", "SlowTP"},
+		Function = function(val)
+			if ClickTPAmount.Object then ClickTPAmount.Object.Visible = val == "SlowTP" end
+			if ClickTPDelay.Object then ClickTPDelay.Object.Visible = val == "SlowTP" end
+			if ClickTPVertical.Object then ClickTPVertical.Object.Visible = val == "SlowTP" end
+			if ClickTPVelocity.Object then ClickTPVelocity.Object.Visible = val == "SlowTP" end
+		end
+	})
+	ClickTPAmount = ClickTP.CreateSlider({
+		Name = "Amount",
+		Min = 1,
+		Max = 50,
+		Function = function() end
+	})
+	ClickTPAmount.Object.Visible = false
+	ClickTPDelay = ClickTP.CreateSlider({
+		Name = "Delay",
+		Min = 1,
+		Max = 50,
+		Function = function() end
+	})
+	ClickTPDelay.Object.Visible = false
+	ClickTPVertical = ClickTP.CreateToggle({
+		Name = "Vertical",
+		Default = true,
+		Function = function() end
+	})
+	ClickTPVertical.Object.Visible = false
+	ClickTPVelocity = ClickTP.CreateToggle({
+		Name = "No Velocity",
+		Default = true,
+		Function = function() end
+	})
+	ClickTPVelocity.Object.Visible = false
+end)]]
+
+--overlay
 
 runFunction(function()
 	bedwarsStore.TPString = shared.vapeoverlay or nil
@@ -9910,30 +10431,27 @@ runFunction(function()
 		IconSize = 16
 	})
 	local overlayframe = Instance.new("Frame")
-	overlayframe.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+	overlayframe.BackgroundColor3 = Color3.fromRGB(0,0,8)
 	overlayframe.Size = UDim2.new(0, 200, 0, 120)
 	overlayframe.Position = UDim2.new(0, 0, 0, 5)
 	overlayframe.Parent = Overlay.GetCustomChildren()
 	local overlayframe2 = Instance.new("Frame")
-	overlayframe2.Size = UDim2.new(1, 0, 0, 10)
-	overlayframe2.Position = UDim2.new(0, 0, 0, -5)
+	overlayframe2.BackgroundColor3 = Color3.fromRGB(140, 10, 200)
+	overlayframe2.Size = UDim2.new(1, 0, 0, 15)
+	overlayframe2.Position = UDim2.new(0, 0, 0, -10)
 	overlayframe2.Parent = overlayframe
 	local overlayframe3 = Instance.new("Frame")
-	overlayframe3.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-	overlayframe3.Size = UDim2.new(1, 0, 0, 6)
-	overlayframe3.Position = UDim2.new(0, 0, 0, 6)
+	overlayframe3.BackgroundColor3 = Color3.fromRGB(0,0,8)
+	overlayframe3.Size = UDim2.new(1, 0, 0, 8)
+	overlayframe3.Position = UDim2.new(0, 0, 0, 8)
 	overlayframe3.BorderSizePixel = 0
 	overlayframe3.Parent = overlayframe2
 	local oldguiupdate = GuiLibrary.UpdateUI
-	GuiLibrary.UpdateUI = function(h, s, v, ...)
-		overlayframe2.BackgroundColor3 = Color3.fromHSV(h, s, v)
-		return oldguiupdate(h, s, v, ...)
-	end
 	local framecorner1 = Instance.new("UICorner")
-	framecorner1.CornerRadius = UDim.new(0, 5)
+	framecorner1.CornerRadius = UDim.new(0, 9)
 	framecorner1.Parent = overlayframe
 	local framecorner2 = Instance.new("UICorner")
-	framecorner2.CornerRadius = UDim.new(0, 5)
+	framecorner2.CornerRadius = UDim.new(0, 9)
 	framecorner2.Parent = overlayframe2
 	local label = Instance.new("TextLabel")
 	label.Size = UDim2.new(1, -7, 1, -5)
@@ -9945,8 +10463,8 @@ runFunction(function()
 	label.TextSize = 16
 	label.Text = ""
 	label.BackgroundTransparency = 1
-	label.TextColor3 = Color3.fromRGB(200, 200, 200)
-	label.Position = UDim2.new(0, 7, 0, 5)
+	label.TextColor3 = Color3.fromRGB(255, 255, 255)
+	label.Position = UDim2.new(0, 7, 0, 2)
 	label.Parent = overlayframe
 	local OverlayFonts = {"Arial"}
 	for i,v in pairs(Enum.Font:GetEnumItems()) do 
@@ -10132,36 +10650,6 @@ runFunction(function()
 		end, 
 		Priority = 2
 	})
-end)
-
-runFunction(function()
-	local ReachDisplay = {}
-	local ReachLabel
-	ReachDisplay = GuiLibrary.CreateLegitModule({
-		Name = "Reach Display",
-		Function = function(callback)
-			if callback then 
-				task.spawn(function()
-					repeat
-						task.wait(0.4)
-						ReachLabel.Text = bedwarsStore.attackReachUpdate > tick() and bedwarsStore.attackReach.." studs" or "0.00 studs"
-					until (not ReachDisplay.Enabled)
-				end)
-			end
-		end
-	})
-	ReachLabel = Instance.new("TextLabel")
-	ReachLabel.Size = UDim2.new(0, 100, 0, 41)
-	ReachLabel.BackgroundTransparency = 0.5
-	ReachLabel.TextSize = 15
-	ReachLabel.Font = Enum.Font.Gotham
-	ReachLabel.Text = "0.00 studs"
-	ReachLabel.TextColor3 = Color3.new(1, 1, 1)
-	ReachLabel.BackgroundColor3 = Color3.new()
-	ReachLabel.Parent = ReachDisplay.GetCustomChildren()
-	local ReachCorner = Instance.new("UICorner")
-	ReachCorner.CornerRadius = UDim.new(0, 4)
-	ReachCorner.Parent = ReachLabel
 end)
 
 task.spawn(function()
