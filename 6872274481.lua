@@ -9993,9 +9993,7 @@ runFunction(function()
 									if v:FindFirstChild("gem") then v:FindFirstChild("gem").Transparency = 1 end
 				                end
     		                end	
-                        end
-						if item.Name == v.Name then
-			            	local swordmodel = folder[item.Name]:Clone()
+							local swordmodel = folder[item.Name]:Clone()
 			            	swordmodel.CFrame = item:WaitForChild("Handle").CFrame * offset
                         	swordmodel.CFrame = item:WaitForChild("Handle").CFrame * angleoffset
 							if item.name == "rageblade" then swordmodel.CFrame = item:WaitForChild("Handle").CFrame * CFrame.Angles(math.rad(-80),math.rad(230),math.rad(10)) end
@@ -10004,7 +10002,7 @@ runFunction(function()
 		    	        	local weld = Instance.new("WeldConstraint",swordmodel)
 		    	        	weld.Part0 = swordmodel
 		    	        	weld.Part1 = item:WaitForChild("Handle")
-						end
+                        end
 	                end
                 end)
             else
