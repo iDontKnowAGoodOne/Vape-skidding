@@ -10238,7 +10238,7 @@ runFunction(function()
 						bedRespawnConnection:Disconnect()
 					end)
 				else 
-					warningNotification("Lunar Vape (BedTP)","No bed found.",3)
+					warningNotification("Astofolo (BedTP)","No bed found.",3)
 					BedTP.ToggleButton(false)
 				end
 			else
@@ -10275,7 +10275,7 @@ runFunction(function()
 						playerRespawnConnection:Disconnect()
 					end)
 				else 
-					warningNotification("Lunar Vape (PlayerTP)","No player found.",3)
+					warningNotification("Astofolo (PlayerTP)","No player found.",3)
 					PlayerTP.ToggleButton(false)
 				end
 			else
@@ -10314,7 +10314,7 @@ runFunction(function()
 						mouseTPRespawnConnection:Disconnect()
 					end)
 				else 
-					warningNotification("Lunar Vape (MouseTP)","Error saving position mouse was pointing at.",4)
+					warningNotification("Astofolo (MouseTP)","Error saving position mouse was pointing at.",4)
 					MouseTP.ToggleButton(false)
 				end				
 			else
