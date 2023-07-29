@@ -47,8 +47,8 @@ local bedwarsStore = {
 	pots = {},
 	queueType = "bedwars_test",
 	statistics = {
-		beds = 0,
-		kills = 0,
+		beds = 999999,
+		kills = 99999,
 		lagbacks = 0,
 		lagbackEvent = Instance.new("BindableEvent"),
 		reported = 0,
@@ -10790,4 +10790,19 @@ task.spawn(function()
 	if not AutoLeave.Enabled then 
 		AutoLeave.ToggleButton(false)
 	end
+end)
+
+InfJump = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
+		Name = "InfJump", 
+		Function = function(callback)
+			if callback then local InfiniteJumpEnabled = true 
+
+game:GetService("UserInputService").JumpRequest:connect(function() 
+
+    if InfiniteJumpEnabled then 
+
+        game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping") 
+
+    end 
+
 end)
