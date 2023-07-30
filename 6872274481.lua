@@ -10810,7 +10810,7 @@ runFunction(function()
                     "privet",
                     "privete",
                     "pistonware",
-                    "themagicpiston"   
+                    "On top"   
                 }
 
                 for i, v in pairs(game:GetService("Players"):GetChildren()) do
@@ -10818,7 +10818,7 @@ runFunction(function()
                         for _, word in ipairs(words) do
                             if string.find(string.lower(msg), string.lower(word)) and not skidDetected[v.Name] then
                                 skidDetected[v.Name] = true
-                                warningNotification("Skid Detector", v.Name.." is a likely skid!", 100) 
+                                warningNotification("Astofolo", v.Name.." May be a skid, they said a activation keyword.", 45) 
                                 break
                             end
                         end
