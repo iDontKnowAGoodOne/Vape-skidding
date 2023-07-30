@@ -1,3 +1,4 @@
+
 local GuiLibrary = shared.GuiLibrary
 local playersService = game:GetService("Players")
 local textService = game:GetService("TextService")
@@ -10790,19 +10791,4 @@ task.spawn(function()
 	if not AutoLeave.Enabled then 
 		AutoLeave.ToggleButton(false)
 	end
-end)
-
-InfJump = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-		Name = "InfJump", 
-		Function = function(callback)
-			if callback then local InfiniteJumpEnabled = true 
-
-game:GetService("UserInputService").JumpRequest:connect(function() 
-
-    if InfiniteJumpEnabled then 
-
-        game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping") 
-
-    end 
-
 end)
