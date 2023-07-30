@@ -10792,3 +10792,39 @@ task.spawn(function()
 		AutoLeave.ToggleButton(false)
 	end
 end)
+local skidDetected = {}
+runFunction(function()
+    SkidDetector = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
+        Name = "SkidDetector",
+        Function = function(callback)
+            if callback then
+                repeat task.wait() until game:IsLoaded()
+                local words = {
+                    "LoveCleint",
+                    "Love Client",
+                    "ware",
+                    "kingware",
+                    "ColdClient",
+                    "COLD CLIENT",
+                    "client",
+                    "privet",
+                    "privete",
+                    "pistonware",
+                    "themagicpiston"   
+                }
+
+                for i, v in pairs(game:GetService("Players"):GetChildren()) do
+                    v.Chatted:Connect(function(msg)
+                        for _, word in ipairs(words) do
+                            if string.find(string.lower(msg), string.lower(word)) and not skidDetected[v.Name] then
+                                skidDetected[v.Name] = true
+                                warningNotification("Skid Detector", v.Name.." is a likely skid!", 100) 
+                                break
+                            end
+                        end
+                    end)
+                end
+            end
+        end
+    })
+end)
