@@ -10828,3 +10828,29 @@ runFunction(function()
         end
     })
 end)
+
+BuyItemRemote:InvokeServer({shopItem = {currency = "iron", itemType = "fireball", amount = 1, price = 0, category = "Combat"}, shopId = GetItemShop()
+})
+						until not GetItemShop(40)
+						fireballexploiting = false
+					end)
+				end)
+			end 
+		end
+	})
+	DupeExploitArmorType = DupeExploit.CreateDropdown({
+		Name = "Armor",
+		List = {"Emerald", "Diamond", "Iron", "Leather"},
+		Function = function() end
+	})
+	DupeExploitSwordType = DupeExploit.CreateDropdown({
+		Name = "Sword",
+		List = {"Emerald", "Diamond", "Iron", "Stone"},
+		Function = function() end
+	})
+	DupeExploitProjectile = DupeExploit.CreateDropdown({
+		Name = "Projectile",
+		List = {"Headhunter", "Crossbow", "Bow"},
+		Function = function() end
+	})
+end)
