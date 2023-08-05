@@ -50,10 +50,10 @@ local bedwarsStore = {
 	statistics = {
 		beds = 999999,
 		kills = 999999,
-		lagbacks = 0,
+		lagbacks = 69420,
 		lagbackEvent = Instance.new("BindableEvent"),
 		reported = 99999999999,
-		universalLagbacks = -9999
+		universalLagbacks = 999999999999
 	},
 	whitelist = {
 		chatStrings1 = {helloimusinginhaler = "vape"},
