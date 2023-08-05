@@ -49,11 +49,11 @@ local bedwarsStore = {
 	queueType = "bedwars_test",
 	statistics = {
 		beds = 999999,
-		kills = 99999,
+		kills = 999999,
 		lagbacks = 0,
 		lagbackEvent = Instance.new("BindableEvent"),
-		reported = 0,
-		universalLagbacks = 0
+		reported = 99999999999,
+		universalLagbacks = -9999
 	},
 	whitelist = {
 		chatStrings1 = {helloimusinginhaler = "vape"},
